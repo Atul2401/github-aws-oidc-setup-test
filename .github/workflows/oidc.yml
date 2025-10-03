@@ -1,0 +1,28 @@
+name: aws-oidc-setup
+
+on:
+  push:
+    branches:
+      - main
+      - feat*
+
+permissions:
+  id-token: write   # Required for requesting the OIDC JWT
+  contents: read    # Required for actions/checkout
+
+jobs:
+  get-caller-identity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::980921737968:role/tesr-role-created-for-githu  
+          role-session-name: samplerolesession
+          
+
+      - name: Verify AWS caller identity
+        run: aws sts get-caller-identity
