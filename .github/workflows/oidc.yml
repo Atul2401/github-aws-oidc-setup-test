@@ -22,7 +22,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::980921737968:role/tesr-role-created-for-githu  
           role-session-name: samplerolesession
-          region: us-east-1
+          aws-region: ${{ env.AWS_REGION }}
           
 
       - name: Verify AWS caller identity
